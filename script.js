@@ -13,3 +13,16 @@ const multiply = function (a, b) {
 const divide = function (a, b) {
     return a / b;
 };
+
+const operate = function (operator, a, b) {
+    if (operator === "add") {
+        return add(a, b);
+    } else if (operator === "subtract") {
+        return subtract(a, b);
+    } else if (operator === "multiply") {
+        return multiply(a, b);
+    } else if (operator === "divide") {
+        return subtract(a, b);
+    }
+
+};
