@@ -43,3 +43,7 @@ button {
 .red {
     background-color: #cc7766;
 }
+
+button:active {
+    filter: brightness(80%);
+}

@@ -36,39 +36,43 @@ let a = 0;
 let b = 0;
 let operator;
 
-const buttons = document.querySelectorAll(".buttons");
+const buttons = document.querySelectorAll("button");
 buttons.forEach((button) => {
     button.addEventListener("click", (event) => {
-        const buttonType = event.target.parentElement.className;
+        const buttonType = event.target.dataset.type;
+        console.log(buttonType);
 
         let operation = false;
 
         //button type
         switch (buttonType) {
-            case "numbers":
-                display += event.target.id;
+            case "number":
+                if (event.target.id === "0") {
+                    display = event.target.id;
+                } else {
+                    display += event.target.id;
+                }
                 break;
-            case "operators":
+            case "operator":
                 a = Number(display);
                 console.log("a: " + a);
                 operation = true;
                 operator = event.target.id;
                 console.log(operator);
                 break;
-            case "executors":
-                switch (event.target.id) {
-                    case "equals":
-                        b = Number(display);
-                        console.log("b: " + b);
-                        display = operate(operator, a, b);
-                        console.log(display);
-                        break;
-                    case "clear":
-                        display = "";
-                        a = 0;
-                        b = 0;
-                        break;
-                }
+            case "equals":
+                b = Number(display);
+                console.log("b: " + b);
+                display = operate(operator, a, b);
+                console.log(display);
+                break;
+            case "all-clear":
+                display = "";
+                a = 0;
+                b = 0;
+                break;
+            default:
+                console.log("ERROR IN BUTTON TYPE EVALUATOR")
                 break;
         }
 
@@ -88,10 +92,3 @@ buttons.forEach((button) => {
         }
     })
 })
-
-/*
-Todo:
--cannot add more 0s in front
--
-
-*/
