@@ -1,0 +1,45 @@
+*, ::before, ::after {
+    box-sizing: border-box;
+    font-family: Roboto Mono, sans-serif;
+    font-size: 36px;
+    color: #1e1e1e;
+}
+
+.container {
+    display: grid;
+    justify-content: center;
+    align-content: center;
+    min-height: 100vh;
+    grid-template-columns: repeat(4, 64px);
+    grid-template-rows: minmax(128px, auto) repeat(5, 64px);
+}
+
+.two-wide {
+    grid-column: span 2;
+}
+
+.display {
+    grid-column: 1 / -1;
+    display: flex;
+    align-items: center;
+    justify-content: end;
+    padding: 16px;
+    font-size: 48px;
+    background-color: #1e1e1e;
+    color: white;
+    outline: 0.5px solid #1e1e1e;
+}
+
+button {
+    background-color: #d9d9d9;
+    border: none;
+    outline: 0.5px solid #1e1e1e;
+}
+
+.yellow {
+    background-color: #d6ad5c;
+}
+
+.red {
+    background-color: #cc7766;
+}
