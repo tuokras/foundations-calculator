@@ -42,11 +42,13 @@ const allClearButton = document.querySelector("[data-type='all-clear']");
 const deleteButton = document.querySelector("[data-type='delete']");
 const dotButton = document.querySelector("[data-type='dot']");
 
+//number
 numberButtons.forEach((numberButton) => {
     numberButton.addEventListener("click", (e) => {
         let numberId = e.target.id;
         currentDisplayArray.push(numberId);
         console.log(currentDisplayArray);
+        updateDisplay(currentDisplayArray.join(""));
         if (findOperatorIndex(currentDisplayArray) === 0) {
             console.log("evaluating after pressing number");
             evaluate(currentDisplayArray);
@@ -54,6 +56,7 @@ numberButtons.forEach((numberButton) => {
     })
 })
 
+//operator
 operatorButtons.forEach((operatorButton) => {
     operatorButton.addEventListener("click", (e) => {
         let operatorId = e.target.id;
@@ -61,7 +64,9 @@ operatorButtons.forEach((operatorButton) => {
         if (currentDisplayArray[currentDisplayArray.length - 1] === operatorId) return;
         //check whether any of the other operators is selected
         if (findOperatorIndex(currentDisplayArray) === (currentDisplayArray.length - 1)) {
-            
+            currentDisplayArray.splice(-1, 1, operatorId);
+            console.log("add operatorId " + operatorId + " after other operator is already pressed. current array: " + currentDisplayArray);
+            return;
         }
         if (listOfOperators.some(r => currentDisplayArray.includes(r))) {
             //evaluate first, add operator after previous result
@@ -76,7 +81,24 @@ operatorButtons.forEach((operatorButton) => {
     })
 })
 
-const evaluate = function (array) {
+//delete
+deleteButton.addEventListener("click", (e) => {
+    console.log("array before delete: " + currentDisplayArray);
+    currentDisplayArray.splice(-1, 1);
+    console.log("array after delete: " + currentDisplayArray);
+    updateDisplay(currentDisplayArray.join(""));
+})
+
+allClearButton.addEventListener("click", (e) => {
+    clear();
+    updateDisplay("0");
+})
+
+equalsButton.addEventListener("click", (e) => {
+    evaluate();
+})
+
+const evaluate = function () {
     //find index of operator
     //split array to two parts, before and after the operator
     //turn array to number
@@ -90,6 +112,7 @@ const evaluate = function (array) {
     console.log(b);
     let result = previousResult + operate(currentDisplayArray[operatorIndex], a, b);
     console.log(result);
+    updateDisplay(result);
     clear();
 }
 
@@ -103,8 +126,14 @@ const findOperatorIndex = function (array) {
 
 const clear = function () {
     currentDisplayArray = [];
+    previousResult = 0;
 }
 
 const arrayToNumber = function (array) {
     return array.map(Number).reduce((accum, digit) => (accum * 10) + digit, 0);
+}
+
+const updateDisplay = function (output) {
+    const displayField = document.querySelector(".display");
+    displayField.textContent = output;
 }
